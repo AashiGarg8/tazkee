@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="splash-page">
+
+    <div class="splash-content">
+        <img src="{% static 'images/task-icon.png' %}" class="splash-icon" alt="Taskzee logo">
+        {% comment %} <h1 class="splash-title">Taskzee</h1> {% endcomment %}
+    </div>
+
+</div>
+
+<script>
+setTimeout(function(){
+    window.location.href = "{% url 'register' %}";
+}, 4000);
+</script>
+
+{% endblock %}

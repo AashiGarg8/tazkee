@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card main-card p-4 bg-white col-md-6 mx-auto">
+    <h4 class="fw-bold mb-4 text-center" Update Task</h4>
+        <form action="" method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Task Title </label>
+                <input type="text" name="title" value="{{task.title}}" class="form-control" placeholder="Enter task title">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Due Date </label>
+                <input type="date" name="due_date" value="{{task.due_date|date:'Y-m-d' }}" class="form-control" required>
+            </div>
+
+            <div class="mb-4 form-check">
+                <input type="checkbox"
+                    name="completed"
+                    class="form-check-input"
+                    id="completedCheck"
+                    {% if task.completed %}checked{% endif %}>
+
+                    <label class="form-check-label fw-semibold" for="completedCheck"> Mark as Completed </label>
+            </div>
+
+
+            <div class="d-flax justify-content-between">>
+                <a href="{% url 'task_list' %}" class="btn btn-outline-secondary btn-custom">
+                   Back
+                </a>
+
+                <button type="submit" class="btn btn-primary btn-custom">
+                    Update Task
+                </button>
+            </div>
+            
+        </form>
+{% endblock %}
+

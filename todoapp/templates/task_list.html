@@ -1,0 +1,103 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+    <div class="card main-card p-4 bg-white">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold">My Tasks</h4>
+            <a href="{%url 'add_task' %}" class="btn btn-primary btn-custom"> + Add Task </a>
+        </div>
+
+        {% comment %} {% for task in tasks %}
+            <div class="border rounded p-3 mb-3">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="{% if task.completed %}text-decoration-line-through text-muted{% endif %}}">
+                            {{ task.title }}
+                        </h6>
+                        <small class="text-muted">
+                            Due: {{task.due_date}}
+                        </small>
+                    </div>
+                </div>
+
+                <div>
+                    {% if task.completed %}
+                        <span class="badge bg-success">Completed</span>
+                    {% else %}
+                        <span class="badge bg-warning text-dark">Pending </span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="mt-2">
+                <a href="{% url 'update_task' task.id %}" class="btn btn-outline-info btn-sm btn-custom">Edit</a>
+
+                <form action="{% url 'delete_task' task.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-danger btn-sm btn-custom">Delete</button>
+                </form>
+
+            </div>  
+            
+            
+            {% empty %}
+            <div class="text-center text-muted">
+                No Tasks added yet
+            </div>
+
+        {% endfor %} {% endcomment %}
+
+        {% for task in tasks %}
+
+<div class="card task-card p-3 mb-3 shadow-sm">
+    <div class="d-flex justify-content-between align-items-start">
+
+        <!-- Task Info -->
+        <div>
+            <h5 class="{% if task.completed %}text-decoration-line-through text-muted{% endif %}">
+                {{ task.title }}
+            </h5>
+
+            <small class="text-muted">
+                Due: {{ task.due_date }}
+            </small>
+
+            <div class="mt-2">
+                {% if task.completed %}
+                    <span class="badge bg-success">Completed</span>
+                {% else %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex gap-2">
+
+            <a href="{% url 'update_task' task.id %}" 
+               class="btn btn-outline-primary btn-sm">
+               Edit
+            </a>
+
+            <form action="{% url 'delete_task' task.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-outline-danger btn-sm">
+                    Delete
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+{% empty %}
+
+<div class="text-center text-muted p-5">
+    <h5>No tasks yet 📝</h5>
+    <p>Click <b>Add Task</b> to create your first task.</p>
+</div>
+
+{% endfor %}
+    </div>
+{% endblock %}
