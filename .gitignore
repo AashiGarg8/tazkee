@@ -43,3 +43,7 @@ htmlcov/
 
 # Migrations (optional - usually keep them)
 # todoapp/migrations/
+
+celerybeat-schedule.bak
+celerybeat-schedule.dat
+celerybeat-schedule.dir
