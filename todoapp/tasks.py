@@ -1,9 +1,29 @@
 from celery import shared_task
 from django.core.mail import send_mail
 from django.utils import timezone
-
 from .models import Task
+import random
+from django.contrib import messages
+from django.core.cache import cache
+from django.shortcuts import render, redirect
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 
+
+User = get_user_model()
+
+# send email
+@shared_task
+def send_email(subject, message, recipient_email):
+    send_mail(
+        subject,
+        message,
+        None,
+        [recipient_email],
+        fail_silently=False,
+    )
+
+# send task email
 @shared_task
 def send_task_email(user_email, task_id, title, created_at, due_date):
     subject = "Task Created"
@@ -25,6 +45,7 @@ def send_task_email(user_email, task_id, title, created_at, due_date):
     )
 
 
+# send due reminder
 @shared_task
 def send_due_reminder(user_email, task_title, due_date):
     send_mail(
@@ -39,6 +60,7 @@ def send_due_reminder(user_email, task_title, due_date):
     )
 
 
+# send due reminders(every morning)
 @shared_task
 def send_due_reminders():
     tomorrow = timezone.localdate() + timezone.timedelta(days=1)

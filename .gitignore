@@ -41,8 +41,7 @@ dist/
 htmlcov/
 .pytest_cache/
 
-# Migrations (optional - usually keep them)
-# todoapp/migrations/
+
 
 celerybeat-schedule.bak
 celerybeat-schedule.dat

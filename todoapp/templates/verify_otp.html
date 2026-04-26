@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!>
+<div class="container mt-5">
+    <div class="card main-card shadow-sm p-4 bg-white col-md-5 mx-auto">
+
+        <h3 class="fw-bold text-center mb-4">Verify OTP</h3>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger py-2" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <!-- OTP Verification Form -->
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Enter OTP</label>
+                <input type="text" name="otp" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                Verify OTP
+            </button>
+        </form>
+
+        <hr>
+
+        <!--Navigation back to registration page -->
+        <div class="text-center">
+            <a href="{% url 'register' %}" class="btn btn-outline-primary w-100">
+                Back to Register
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
